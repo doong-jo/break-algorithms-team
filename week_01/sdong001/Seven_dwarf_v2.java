@@ -20,7 +20,7 @@ package brute_force;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
 
 public class Seven_dwarf_v2 {
     static final int DWARFS_HEIGHT = 100;
@@ -44,7 +44,7 @@ public class Seven_dwarf_v2 {
 
         Arrays.sort(dwarfs);
 
-        showDwarfs(dwarfs, dwarfs.length - DWARFS, MAX_DWARFS);
+        showDwarfs(dwarfs.length - DWARFS, MAX_DWARFS);
     }
 
     public static void findSeven(int pivot, int cnt) {
@@ -63,7 +63,7 @@ public class Seven_dwarf_v2 {
         findSeven(pivot, cnt);
     }
 
-    public static void showDwarfs(final int[] dwarfs, final int overLen, final int dwarfLen) {
+    public static void showDwarfs(final int overLen, final int dwarfLen) {
         for (int i = overLen; i < dwarfLen; i++) {
             System.out.println(dwarfs[i]);
         }
