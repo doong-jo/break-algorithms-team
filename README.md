@@ -6,7 +6,7 @@
 - [ ] bfs
 
 ## Problem reference
-### [BOC](https://www.acmicpc.net/)
+### [BOJ](https://www.acmicpc.net/)
 
 - - -
 
