@@ -3,7 +3,7 @@
 
 ## Step
 - [x] [brute_force](week_01)
-- [ ] bfs
+- [x] [bfs](week_02)
 
 ## Problem reference
 ### [BOJ](https://www.acmicpc.net/)
