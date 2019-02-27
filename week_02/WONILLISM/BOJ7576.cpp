@@ -4,13 +4,15 @@
 
 using namespace std;
 
-const int MAX_SIZE = 1000;
-int N, M, day;
+const int MAX_SIZE = 1001;
+int N, M;
+int day;
 int tomato[MAX_SIZE][MAX_SIZE];
 bool check[MAX_SIZE][MAX_SIZE];
-
+int c_step[MAX_SIZE][MAX_SIZE];
 int dir_y[4] = { -1,0,1,0 };
 int dir_x[4] = { 0,-1,0,1 };
+
 typedef struct Pos {
 	int x;
 	int y;
@@ -18,7 +20,7 @@ typedef struct Pos {
 }Pos;
 
 /*---------------QUEUE---------------*/
-const int MAX_QUEUE_SIZE = 128;
+const int MAX_QUEUE_SIZE = 1024;
 Pos queue[MAX_QUEUE_SIZE];
 int front = 0;
 int rear = 0;
@@ -43,7 +45,6 @@ Pos pop() {
 
 /*---------------QUEUE---------------*/
 
-
 void search() {
 	Pos cur;
 
@@ -51,25 +52,24 @@ void search() {
 		
 		cur = pop();
 		day = cur.step;
+		c_step[cur.y][cur.x] = 1;
 
-		check[cur.y][cur.x] = true;
 
 		for (int i = 0; i < 4; i++) {
 			int ny = cur.y + dir_y[i];
 			int nx = cur.x + dir_x[i];
 			
-
 			if (ny >= 0 && nx >= 0 && ny < M&&nx < N) {
-				if (!check[ny][nx]) {
+				if (c_step[ny][nx]<=cur.step) {
 					if (tomato[ny][nx] == 0) {
-						check[ny][nx] = true;
+						//check[ny][nx] = true;
+						c_step[ny][nx] = cur.step + 1;
 						tomato[ny][nx] = 1;
-						push(ny, nx, day + 1);
+						push(ny, nx, cur.step + 1);
 
 					}
 				}
 			}
-
 		}
 	}
 }
@@ -80,32 +80,33 @@ void testcase() {
 	for (int i = 1; i <= M; i++) {
 		for (int j = 1; j <= N; j++) {
 			f >> tomato[i][j];
-			cout << tomato[i][j];
+			//cout << tomato[i][j];
 		}
-		cout << endl;
+		//cout << endl;
 	}
 }
 
 int main() {
 	cin >> N >> M;
-	testcase();
-	/*for (int i = 0; i < M; i++) {
+	//testcase();
+	for (int i = 0; i < M; i++) {
 		for (int j = 0; j < N; j++) {
 			cin >> tomato[i][j];
 		}
-	}*/
+	}
 
 	for (int i = 0; i < M; i++) {
 		for (int j = 0; j < N; j++) {
 			if (tomato[i][j] == 1) {
-				push(j, i, 0);
+				push(i, j, 0);
 			}
 		}
 	}
+
 	search();
 
-	for (int i = 1; i <= M; i++) {
-		for (int j = 1; j <= N; j++) {
+	for (int i = 0; i < M; i++) {
+		for (int j = 0; j < N; j++) {
 			if (tomato[i][j] == 0) {
 				cout << "-1";
 				return 0;
@@ -115,5 +116,4 @@ int main() {
 	cout << day;
 
 	return 0;
-
 }
