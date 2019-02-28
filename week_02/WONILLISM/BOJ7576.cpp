@@ -8,7 +8,6 @@ const int MAX_SIZE = 1001;
 int N, M;
 int day;
 int tomato[MAX_SIZE][MAX_SIZE];
-bool check[MAX_SIZE][MAX_SIZE];
 int c_step[MAX_SIZE][MAX_SIZE];
 int dir_y[4] = { -1,0,1,0 };
 int dir_x[4] = { 0,-1,0,1 };
@@ -20,7 +19,7 @@ typedef struct Pos {
 }Pos;
 
 /*---------------QUEUE---------------*/
-const int MAX_QUEUE_SIZE = 1024;
+const int MAX_QUEUE_SIZE = 1 << 20;
 Pos queue[MAX_QUEUE_SIZE];
 int front = 0;
 int rear = 0;
@@ -49,23 +48,22 @@ void search() {
 	Pos cur;
 
 	while (front != rear) {
-		
+
 		cur = pop();
 		day = cur.step;
-		c_step[cur.y][cur.x] = 1;
 
+		c_step[cur.y][cur.x] = 1;
 
 		for (int i = 0; i < 4; i++) {
 			int ny = cur.y + dir_y[i];
 			int nx = cur.x + dir_x[i];
-			
+
 			if (ny >= 0 && nx >= 0 && ny < M&&nx < N) {
-				if (c_step[ny][nx]<=cur.step) {
+				if (cur.step == 0 || c_step[ny][nx] < cur.step) {
 					if (tomato[ny][nx] == 0) {
-						//check[ny][nx] = true;
 						c_step[ny][nx] = cur.step + 1;
 						tomato[ny][nx] = 1;
-						push(ny, nx, cur.step + 1);
+						push(ny, nx, c_step[ny][nx]);
 
 					}
 				}
@@ -74,21 +72,8 @@ void search() {
 	}
 }
 
-void testcase() {
-	ifstream f;
-	f.open("tomato_testcase(1).txt");
-	for (int i = 1; i <= M; i++) {
-		for (int j = 1; j <= N; j++) {
-			f >> tomato[i][j];
-			//cout << tomato[i][j];
-		}
-		//cout << endl;
-	}
-}
-
 int main() {
 	cin >> N >> M;
-	//testcase();
 	for (int i = 0; i < M; i++) {
 		for (int j = 0; j < N; j++) {
 			cin >> tomato[i][j];
