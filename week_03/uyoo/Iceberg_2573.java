@@ -63,30 +63,20 @@ public class Iceberg_2573 {
         }
     }
 
-    private static int findIceberg() {
+    private static int findIceBergField() {
         checked = new boolean[n][m];
 
-        int cnt = 0;
+        int fieldCnt = 0;
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
                 if(!checked[i][j] && iceBergs[i][j] != 0){
                     meltIceberg(i, j);
                     //나뉜 구역의 개수 카운팅
-                    cnt++;
+                    fieldCnt++;
                 }
             }
         }
-        return cnt;
-    }
-
-    private static boolean isMeltedAll() {
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                if(iceBergs[i][j] != 0)
-                    return false;
-            }
-        }
-        return true;
+        return fieldCnt;
     }
 
     public static void main(String[] args) throws IOException {
@@ -99,7 +89,6 @@ public class Iceberg_2573 {
         m = Integer.parseInt(st.nextToken());
 
         iceBergs = new int[n][m];
-//        checked = new boolean[n][m];
 
         for(int i=0; i<n; i++){
             String input = br.readLine();
@@ -110,17 +99,20 @@ public class Iceberg_2573 {
         }
 
         int cnt = 0;
-        while(cnt < 2){
-            //빙하가 다 녹았음에도 구역이 2개 이상으로 나뉘지 않은 경우
-            if(isMeltedAll()){
+        while(true){
+            //빙하가 모두 녹아있는 상태라면 cnt = 0을 반환
+            //나뉜 구역 카운팅 -> 녹이기 -> 1년 경과 -> 나뉜 구역 카운팅...
+            cnt = findIceBergField();
+            year++;
+
+            //cnt는 녹이기 전의 구역 개수를 카운팅하기 때문에 year-1을 해줘야함
+            if(cnt >= 2){
+                System.out.println(year-1);
+                return;
+            } else if(cnt == 0){
                 System.out.println(0);
                 return;
             }
-            cnt = findIceberg();
-            year++;
         }
-
-        //cnt는 녹이기 전의 구역 개수를 카운팅하기 때문에 year-1을 해줘야함
-        System.out.println(year-1);
     }
 }
