@@ -87,6 +87,17 @@ Pos next_water_pop() {
 /*------------Queue-----------------*/
 Pos swan_pos[2];
 
+/*
+ *백조에 대한 BFS
+ *if(인접한방향이 물) 백조의 현재큐에 push후 진행
+ *if(인접한방향이 빙판) 백조의 다음큐에 push후 진행
+ *if(인접한방향이 다른백조) 서로 만남 check 종료
+ *
+ *물에 대한 BFS
+ *if(인접한방향이 물) 물의 현재큐에 push후 진행
+ *if(인접한방향이 빙판) 물의 다음큐에 push후 해당 정점 물로 바꿈
+ */
+
 void Input()
 {
 	Find = false;
@@ -168,10 +179,13 @@ void Water_BFS()
 		}
 	}
 }
+//while문을 계속 돌리면서 백조에 대한 BFS(), 물에대한 BFS()를 한번씩 실행시킨다.
+//백조가 서로 만나면 종료
 
 void Solution()
 {
 	int Day = 0;
+	//찾은 백조 좌표를 현재 백조 큐에 푸시
 	cur_swan_push(swan_pos[0].x, swan_pos[0].y);
 	Visit[swan_pos[0].x][swan_pos[0].y] = true;
 
@@ -179,12 +193,15 @@ void Solution()
 	Pos swanQ;
 	while (Find == false)
 	{
+		//현재 백조가 다른백조를 찾음
 		Swan_BFS();
-
+		//만약 못찾았다면 
 		if (Find == false)
 		{
+			//빙판을 찾아서 next_water_Q에 푸시
+			//빙판을 물로 바꿈
 			Water_BFS();
-
+			//다음 큐에 있던 정보들을 현재 큐로 몽땅 집어넣음
 			while (nwf != nwr) {
 				waterQ = next_water_pop();
 				cur_water_push(waterQ.x, waterQ.y);
