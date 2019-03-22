@@ -3,6 +3,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+/*
+* 1시간 동안
+*    1) 배양 가능한 상태(활성화)라면 상하좌우 배양 및 생명력 기간 동안 활성화 상태 체크
+*    2) 활성화 상태가 아니라면 활성화 상태로 만듦
+*
+* time -= 1을 하는 이유
+*   1) 활성화 된 시점(time = 0)부터 생명력 기간동안 활성화 상태 유지를 확인
+*       ex. |-2| = 2 이면 die = true(종료) 전환, 큐에 삽입 x
+*
+*   2) 활성화 상태로 만들기 위해 -1씩 차감
+* */
+
 
 class Dot_5653 implements Comparable<Dot_5653>{
     public int y, x;
@@ -33,19 +45,17 @@ public class StemCells_5653 {
     static int[] dx = {0, 1, 0, -1};
 
     static Queue<Dot_5653> queue;
-    static PriorityQueue<Dot_5653> priorityQueue = new PriorityQueue<>();
     static int hour = 0;
 
     private static void doBfs() {
         hour = 0;
-
         Dot_5653 q;
         while (!queue.isEmpty()){
             if(hour == k){
                 return;
             }
 
-            //우선순위 부여 (우선순위 큐 방안은 다시 생각)
+            //우선순위 부여
             Collections.sort((List)queue);
 
             int size = queue.size();
@@ -53,7 +63,7 @@ public class StemCells_5653 {
                 q = queue.poll();
 
                 //활성화인 세포 & !종료 인 경우
-                if(q.time <= 0 && !q.die){
+                if(q.time <= 0){
                     q.time -= 1;
 
                     //상하좌우 배양
@@ -84,7 +94,6 @@ public class StemCells_5653 {
                 }
             }
             hour++;
-            System.out.println();
         }
     }
 
@@ -93,7 +102,6 @@ public class StemCells_5653 {
         StringTokenizer st;
 
         int testCase = Integer.parseInt(br.readLine());
-
         int t = 0;
         while (t < testCase) {
             String config = br.readLine();
