@@ -62,17 +62,12 @@
  28 11
  8E0B7DD258D4122317E3ADBFEA99
 
+
  [출력]
 
  출력의 각 줄은 '#t'로 시작하고, 공백을 한 칸 둔 다음 정답을 출력한다.
 
  (t는 테스트 케이스의 번호를 의미하며 1부터 시작한다.)
-
- #0 3957
- #1 11663
- #2 587281
- #3 10897330
- #4 131933581
  */
 
 package swea;
@@ -81,6 +76,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class TresureBoxPw {
+    // 변 한개 더 추
     public static final int MAX_N = 45;
     static int N, K;
     static int[] Digits;
@@ -97,12 +93,28 @@ public class TresureBoxPw {
             s = sc.nextLine();
             for (int i1 = 0; i1 < s.length(); i1++) { temp[i1] = s.charAt(i1); }
             Digits = new int[MAX_N];
+
+            // convert 10 digits
             for (int i = 0; i < N; i++) {
                 if (temp[i] < 'A') Digits[i] = temp[i] - '0';
                 else Digits[i] = temp[i] - 'A' + 10;
             }
+
+
+            // 배열 앞의 N / 4개 의 데이터를 맨 뒤에 추가
             for (int a = 0; a < N / 4; a++) {
                 Digits[N + a] = Digits[a];
+                //D[N + 0] = D[0];
+                //D[N + 1] = D[1];
+                //D[N + 2] = D[2];
+
+                //D[N + 3] = D[3];
+                //D[N + 4] = D[4];
+                //D[N + 5] = D[5];
+
+                //D[N + 6] = D[6];
+                //D[N + 7] = D[7];
+                //D[N + 8] = D[8];
             }
 
             System.out.printf("#%d %d\n", t, Solution());
@@ -114,11 +126,15 @@ public class TresureBoxPw {
         int cnt = 0;
         int len = N / 4;
 
+        // 각 변으로 짜름
         for (int i = 0; i < len; ++i) {
+            // 마름모는 변이 4개
             for (int j = 0; j < 4; ++j) {
                 int tmp = 0;
 
+                // 한 변에 있는 숫자들
                 for (int k = 0; k < len; ++k) {
+                    // 왼쪽으로 한칸씩 이동
                     tmp *= 16;
                     tmp += Digits[i + j * len + k];
                 }
@@ -127,6 +143,8 @@ public class TresureBoxPw {
             }
         }
 
+
+        // 내림차순 정렬 가장 큰 수로 만들어야 하므로
         for (int i = 0; i < cnt - 1; ++i) {
             for (int j = 0; j < i + 1; j++) {
                 if( nums[i] < nums[j] ) {
@@ -139,8 +157,11 @@ public class TresureBoxPw {
 
         int k;
         for (k = 0;  k < K; k++) {
+
             if ( k > 0 && nums[k] == nums[k - 1]) K++;
         }
+
+        // K번째 반환
         return nums[k - 1];
     }
 }
