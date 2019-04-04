@@ -88,8 +88,7 @@ public class Boggle_9202 {
 
         boardCnt = Integer.parseInt(br.readLine());
         int b = 0;
-        while (b < boardCnt){
-            //보드로 단어 조합, 조합된 단어를 Trie 사전에서 search
+        while (b < boardCnt){            
             boards = new char[4][4];
             for(int i=0; i<4; i++){
                 String input = br.readLine();
