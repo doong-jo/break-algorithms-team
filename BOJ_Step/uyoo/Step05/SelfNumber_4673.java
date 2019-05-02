@@ -1,4 +1,3 @@
-package me.uyoo.GroupPractice.Week_07_Step.Step05;
 
 public class SelfNumber_4673 {
     static boolean[] checkd = new boolean[10001];

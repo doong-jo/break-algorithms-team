@@ -1,4 +1,3 @@
-package me.uyoo.GroupPractice.Week_07_Step.Step03;
 
 import java.io.BufferedReader;
 import java.io.IOException;
