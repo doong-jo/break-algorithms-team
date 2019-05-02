@@ -1,5 +1,3 @@
-package me.uyoo.GroupPractice.Week_01;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
