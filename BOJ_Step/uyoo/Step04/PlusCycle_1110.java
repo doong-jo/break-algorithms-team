@@ -21,10 +21,10 @@ public class PlusCycle_1110 {
             int first = Integer.parseInt(sb.substring(0, 1));
             int second = Integer.parseInt(sb.substring(1, 2));
             int sum = first + second;
-            String sum_second = Integer.toString(sum);
+            String sum_str = Integer.toString(sum);
 
             //처음 숫자의 두번째 수 + 더해진 숫자의 두번째 수
-            str = sb.substring(sb.length()-1, sb.length()) + sum_second.substring(sum_second.length()-1, sum_second.length());
+            str = sb.substring(sb.length()-1, sb.length()) + sum_str.substring(sum_str.length()-1, sum_str.length());
             sb = new StringBuilder(str);
             cycleCnt++;
 
